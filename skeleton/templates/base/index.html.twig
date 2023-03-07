@@ -3,18 +3,99 @@
 {% block title %}Hello BaseController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>XtremShoppingManagerDeluxe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .header {
+            background-color: #A9DEF9;
+            color: black;
+            padding: 20px;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Applications/MAMP/htdocs/Courses/skeleton/src/Controller/BaseController.php'|file_link(0) }}">src/Controller/BaseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Applications/MAMP/htdocs/Courses/skeleton/templates/base/index.html.twig'|file_link(0) }}">templates/base/index.html.twig</a></code></li>
-    </ul>
-</div>
+        h1 {
+            font-size: 4em;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 1em;
+        }
+
+        .intro {
+            background-color: #f2f2f2;
+            padding: 2em;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+        .btn {
+            text-decoration: none;
+            background-color: #A9DEF9;
+            color: black;
+            padding: 0.8em 1.5em;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #87BCD7;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>XtremShoppingManagerDeluxe</h1>
+        <p>Créez des listes de courses et établissez des statistiques tarifaires !</p>
+    </div>
+    <div class="intro">
+        <div class="content">
+            <h2>Le concept</h2>
+            <p>XtremShoppingManagerDeluxe est un site web qui vous permet de créer des listes de courses en y ajoutant les prix des articles que vous avez l'habitude d'acheter. Vous pouvez ensuite visualiser les statistiques tarifaires de ces listes et ainsi optimiser vos achats pour économiser de l'argent.</p>
+            <p>Vous pouvez également partager vos listes avec vos amis et votre famille pour collaborer sur vos achats.</p>
+            <a class="btn" href="./login">Commencer maintenant</a>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Les fonctionnalités</h2>
+        <ul>
+            <li>Créez des listes de courses personnalisées</li>
+            <li>Ajoutez les prix des articles que vous avez l'habitude d'acheter</li>
+            <li>Visualisez les statistiques tarifaires de vos listes</li>
+            <li>Partagez vos listes avec vos amis et votre famille</li>
+            <li>Sauvegardez vos listes pour une utilisation ultérieure</li>
+        </ul>
+    </div>
+    <div class="footer">
+        <p>XtremShoppingManagerDeluxe &copy; 2023 - Tous droits réservés</p>
+    </div>
+</body>
+</html>
+
 {% endblock %}
