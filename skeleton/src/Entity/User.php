@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Liste::class)]
+    private Collection $liste;
+
+    public function __construct()
+    {
+        $this->liste = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,5 +120,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Liste>
+     */
+    public function getListe(): Collection
+    {
+        return $this->liste;
+    }
+
+    public function addListe(Liste $liste): self
+    {
+        if (!$this->liste->contains($liste)) {
+            $this->liste->add($liste);
+            $liste->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListe(Liste $liste): self
+    {
+        if ($this->liste->removeElement($liste)) {
+            // set the owning side to null (unless already changed)
+            if ($liste->getUtilisateur() === $this) {
+                $liste->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 }

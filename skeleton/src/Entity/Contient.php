@@ -19,6 +19,12 @@ class Contient
     #[ORM\Column]
     private ?bool $achete = null;
 
+    #[ORM\ManyToOne(inversedBy: 'contients')]
+    private ?propose $propose = null;
+
+    #[ORM\ManyToOne(inversedBy: 'contient')]
+    private ?Liste $liste = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,4 +53,29 @@ class Contient
 
         return $this;
     }
+
+    public function getPropose(): ?propose
+    {
+        return $this->propose;
+    }
+
+    public function setPropose(?propose $propose): self
+    {
+        $this->propose = $propose;
+
+        return $this;
+    }
+
+    public function getListe(): ?Liste
+    {
+        return $this->liste;
+    }
+
+    public function setListe(?Liste $liste): self
+    {
+        $this->liste = $liste;
+
+        return $this;
+    }
+
 }
