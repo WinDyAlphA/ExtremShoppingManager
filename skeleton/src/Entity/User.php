@@ -22,6 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\Column]
+
+    private ?string $pseudo = null;
+
     /**
      * @var string The hashed password
      */
@@ -41,6 +45,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUuid(string $uuid): self
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
