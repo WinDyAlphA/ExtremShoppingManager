@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>XtremShoppingManagerDeluxe</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         body {
             margin: 0;
@@ -70,32 +71,50 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>XtremShoppingManagerDeluxe</h1>
-        <p>Créez des listes de courses et établissez des statistiques tarifaires !</p>
-    </div>
-    <div class="intro">
-        <div class="content">
-            <h2>Le concept</h2>
-            <p>XtremShoppingManagerDeluxe est un site web qui vous permet de créer des listes de courses en y ajoutant les prix des articles que vous avez l'habitude d'acheter. Vous pouvez ensuite visualiser les statistiques tarifaires de ces listes et ainsi optimiser vos achats pour économiser de l'argent.</p>
-            <p>Vous pouvez également partager vos listes avec vos amis et votre famille pour collaborer sur vos achats.</p>
-            <a class="btn" href="{{ path('app_register') }}">Se connecter</a>
+    <div class="container">
+        <div class="header text-center bg-primary text-white py-3">
+            <h1>XtremShoppingManagerDeluxe</h1>
+            <p>Créez des listes de courses et établissez des statistiques tarifaires !</p>
         </div>
+        <div class="intro py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Le concept</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <p>XtremShoppingManagerDeluxe est un site web qui vous permet de créer des listes de courses en y ajoutant les prix des articles que vous avez l'habitude d'acheter. Vous pouvez ensuite visualiser les statistiques tarifaires de ces listes et ainsi optimiser vos achats pour économiser de l'argent.</p>
+                        <p>Vous pouvez également partager vos listes avec vos amis et votre famille pour collaborer sur vos achats.</p>
+                        <a class="btn btn-primary mt-3" href="{{ path('app_login') }}">Commencer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Les fonctionnalités</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Créez des listes de courses personnalisées</li>
+                            <li>Ajoutez les prix des articles que vous avez l'habitude d'acheter</li>
+                            <li>Visualisez les statistiques tarifaires de vos listes</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Partagez vos listes avec vos amis et votre famille</li>
+                            <li>Sauvegardez vos listes pour une utilisation ultérieure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <div class="content">
-        <h2>Les fonctionnalités</h2>
-        <ul>
-            <li>Créez des listes de courses personnalisées</li>
-            <li>Ajoutez les prix des articles que vous avez l'habitude d'acheter</li>
-            <li>Visualisez les statistiques tarifaires de vos listes</li>
-            <li>Partagez vos listes avec vos amis et votre famille</li>
-            <li>Sauvegardez vos listes pour une utilisation ultérieure</li>
-        </ul>
-    </div>
-    <div class="footer">
-        <p>XtremShoppingManagerDeluxe &copy; 2023 - Tous droits réservés</p>
-    </div>
+    <div class="footer py-3" style="position: fixed; bottom: 0; width: 100%;">
+            <div class="container">
+                <p class="text-center">XtremShoppingManagerDeluxe &copy; 2023 - Tous droits réservés</p>
+            </div>
+        </div>
 </body>
-</html>
 
 {% endblock %}

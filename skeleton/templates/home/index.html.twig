@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<div class="container">
+    <h1 class="text-center">Bienvenue sur votre <i>DashBoard</i></h1>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Listes que vous avez créé</h2>
+                </div>
+                <div class="card-body">
+                    <div class="example-wrapper">
+                        <ul class="list-group">
+                            {% for liste in listes %}
+                                <li class="list-group-item">
+                                    <a href="hey">{{ liste.titre }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Créer une nouvelle liste</a>
+                </div>
+            </div>
+            <br />
+            <div class="card">
+                <div class="card-header">
+                    <h2>Statistiques de votre compte:</h2>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
