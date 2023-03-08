@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(ListeRepository $listeRepo): Response
     {
-        $listes = $listeRepo->findAll();
+        $listes = $this->getUser()->getListe();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'listes' => $listes,

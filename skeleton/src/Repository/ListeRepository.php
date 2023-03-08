@@ -39,6 +39,16 @@ class ListeRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAllByUuid(string $uuid): array
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.uuid = :val')
+            ->setParameter('val', $uuid)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Liste[] Returns an array of Liste objects
 //     */

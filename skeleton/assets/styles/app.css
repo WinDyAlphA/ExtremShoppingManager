@@ -1,3 +1,55 @@
-body {
-    background-color: lightgray;
-}
+@import '~bootstrap/dist/css/bootstrap.css';
+
+
+/* Centre le formulaire dans la page */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    }
+    
+    /* Donne un style au titre */
+    h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    }
+    
+    /* Donne un style aux labels */
+    label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    }
+    
+    /* Donne un style aux inputs */
+    input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+    }
+    
+    /* Donne un style au bouton */
+    button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    }
+    
+    /* Donne un style au bouton lorsque la souris passe dessus */
+    button:hover {
+    background-color: #0069d9;
+    }
+    
+    /* Donne un style au bouton lorsqu'il est appuyé */
+    button:active {
+    background-color: #0053a3;
+    }
+    
