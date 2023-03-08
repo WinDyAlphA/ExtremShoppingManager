@@ -3,18 +3,96 @@
 {% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion | XtremShoppingManagerDeluxe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .header {
+            background-color: #A9DEF9;
+            color: black;
+            padding: 20px;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/XtremShoppingManagerDelux/skeleton/src/Controller/LoginController.php'|file_link(0) }}">src/Controller/LoginController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/XtremShoppingManagerDelux/skeleton/templates/login/index.html.twig'|file_link(0) }}">templates/login/index.html.twig</a></code></li>
-    </ul>
-</div>
+        h1 {
+            font-size: 4em;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 1em;
+        }
+
+        .intro {
+            background-color: #f2f2f2;
+            padding: 2em;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+        .btn {
+            text-decoration: none;
+            background-color: #A9DEF9;
+            color: black;
+            padding: 0.8em 1.5em;
+            border: none;
+            border-radius: 3px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #87BCD7;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>XtremShoppingManagerDeluxe</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Inscription</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <h2>Connexion</h2>
+        <form method="post">
+            {{ form_start(form) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.password) }}
+            <button type="submit" class="btn">Se connecter</button>
+            {{ form_end(form) }}
+        </form>
+    </div>
+    <footer class="footer">
+        <p>XtremShoppingManagerDeluxe &copy; 2023</p>
+    </footer>
+</body>
+</html>
+
 {% endblock %}

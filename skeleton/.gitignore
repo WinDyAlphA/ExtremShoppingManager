@@ -8,7 +8,11 @@
 /public/bundles/
 /var/
 /vendor/
+<<<<<<< HEAD
 /.env
+=======
+.env
+>>>>>>> 9ee5ac3ed461e140d20d5d4c31f94691e4da82a2
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
