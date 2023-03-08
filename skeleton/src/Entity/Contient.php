@@ -20,7 +20,7 @@ class Contient
     private ?bool $achete = null;
 
     #[ORM\ManyToOne(inversedBy: 'contients')]
-    private ?propose $propose = null;
+    private ?Propose $propose = null;
 
     #[ORM\ManyToOne(inversedBy: 'contient')]
     private ?Liste $liste = null;
@@ -54,12 +54,12 @@ class Contient
         return $this;
     }
 
-    public function getPropose(): ?propose
+    public function getPropose(): ?Propose
     {
         return $this->propose;
     }
 
-    public function setPropose(?propose $propose): self
+    public function setPropose(?Propose $propose): self
     {
         $this->propose = $propose;
 
