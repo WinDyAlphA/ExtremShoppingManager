@@ -17,11 +17,16 @@ class HomeController extends AbstractController
     {
         
         $listes = $this->getUser()->getListe();
+        if(count($listes) == 0){
+            $counter = 1;
+        } else {
+            $counter = count($listes);
+        }
         $total = 0;
         foreach ($listes as $liste) {
             $total += $liste->getTotal();
         }
-        $average = $total / count($listes);
+        $average = $total / $counter;
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'listes' => $listes,
