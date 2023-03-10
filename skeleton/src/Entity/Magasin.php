@@ -22,11 +22,12 @@ class Magasin
     private ?string $localisation = null;
 
     #[ORM\OneToMany(mappedBy: 'magasin', targetEntity: Propose::class)]
-    private Collection $proposes;
+    private Collection $proposess;
+
 
     public function __construct()
     {
-        $this->proposes = new ArrayCollection();
+        $this->proposess = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,30 +62,32 @@ class Magasin
     /**
      * @return Collection<int, Propose>
      */
-    public function getProposes(): Collection
+    public function getProposess(): Collection
     {
-        return $this->proposes;
+        return $this->proposess;
     }
 
-    public function addPropose(Propose $propose): self
+    public function addProposess(Propose $proposess): self
     {
-        if (!$this->proposes->contains($propose)) {
-            $this->proposes->add($propose);
-            $propose->setMagasin($this);
+        if (!$this->proposess->contains($proposess)) {
+            $this->proposess->add($proposess);
+            $proposess->setMagasin($this);
         }
 
         return $this;
     }
 
-    public function removePropose(Propose $propose): self
+    public function removeProposess(Propose $proposess): self
     {
-        if ($this->proposes->removeElement($propose)) {
+        if ($this->proposess->removeElement($proposess)) {
             // set the owning side to null (unless already changed)
-            if ($propose->getMagasin() === $this) {
-                $propose->setMagasin(null);
+            if ($proposess->getMagasin() === $this) {
+                $proposess->setMagasin(null);
             }
         }
 
         return $this;
     }
+
+   
 }

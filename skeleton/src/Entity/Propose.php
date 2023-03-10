@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProposeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProposeRepository::class)]
@@ -15,38 +13,18 @@ class Propose
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $prix = null;
-
-    #[ORM\ManyToOne(inversedBy: 'proposes')]
+    #[ORM\ManyToOne(inversedBy: 'proposess')]
     private ?Article $article = null;
 
-    #[ORM\ManyToOne(inversedBy: 'proposes')]
+    #[ORM\ManyToOne(inversedBy: 'proposess')]
     private ?Magasin $magasin = null;
 
-    #[ORM\OneToMany(mappedBy: 'propose', targetEntity: Contient::class)]
-    private Collection $contients;
-
-    public function __construct()
-    {
-        $this->contients = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?float $prix = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPrix(): ?int
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(int $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
     }
 
     public function getArticle(): ?Article
@@ -73,32 +51,14 @@ class Propose
         return $this;
     }
 
-    /**
-     * @return Collection<int, Contient>
-     */
-    public function getContients(): Collection
+    public function getPrix(): ?float
     {
-        return $this->contients;
+        return $this->prix;
     }
 
-    public function addContient(Contient $contient): self
+    public function setPrix(float $prix): self
     {
-        if (!$this->contients->contains($contient)) {
-            $this->contients->add($contient);
-            $contient->setPropose($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContient(Contient $contient): self
-    {
-        if ($this->contients->removeElement($contient)) {
-            // set the owning side to null (unless already changed)
-            if ($contient->getPropose() === $this) {
-                $contient->setPropose(null);
-            }
-        }
+        $this->prix = $prix;
 
         return $this;
     }
