@@ -21,6 +21,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+<<<<<<< HEAD
         "jquery": "^3.6.4"
+=======
+        "boostrap": "^2.0.0"
+>>>>>>> 996dfc7af0ca7a39d44d395439f12d50a37386c1
     }
 }
