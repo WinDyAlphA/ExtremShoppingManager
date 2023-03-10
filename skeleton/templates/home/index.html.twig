@@ -12,6 +12,7 @@
 
 <div class="container">
     <h1 class="text-center">Bienvenue sur votre <i>DashBoard</i></h1>
+    <br />
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card">
@@ -22,9 +23,12 @@
                     <div class="example-wrapper">
                         <ul class="list-group">
                             {% for liste in listes %}
-                                <li class="list-group-item">
-                                    <a href="hey">{{ liste.titre }}</a>
-                                </li>
+                                <a href=" {{ path('liste_show', {'id': liste.id}) }} ">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ liste.titre }}
+                                    <span class="badge badge-primary badge-pill">{{liste.contient.count}}</span>
+                                    </li>
+                                </a>
                             {% endfor %}
                         </ul>
                     </div>
@@ -39,6 +43,28 @@
                     <h2>Statistiques de votre compte:</h2>
                 </div>
                 <div class="card-body">
+                    <section class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Nombre de listes créées</h3>
+                                </div>
+                                <div class="card-body">
+                                    <h1 class="text-center">{{listes.count}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Total moyen par liste</h3>
+                                </div>
+                                <div class="card-body">
+                                    <h1 class="text-center">{{average}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>

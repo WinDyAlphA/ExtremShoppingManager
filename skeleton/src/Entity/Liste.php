@@ -102,4 +102,13 @@ class Liste
 
         return $this;
     }
+
+    public function getTotal(): float
+    {
+        $total = 0;
+        foreach ($this->getContient() as $contient) {
+            $total += $contient->getPropose()->getPrix();
+        }
+        return $total;
+    }
 }
