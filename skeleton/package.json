@@ -3,11 +3,15 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@hotwired/stimulus": "^3.0.0",
+        "@popperjs/core": "^2.11.6",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.2.0",
         "bootstrap": "^5.3.0-alpha1",
         "core-js": "^3.23.0",
+        "jquery": "^3.6.4",
+        "node-sass": "^8.0.0",
         "regenerator-runtime": "^0.13.9",
+        "sass-loader": "^13.2.0",
         "webpack": "^5.75.0",
         "webpack-cli": "^4.10.0",
         "webpack-notifier": "^1.15.0"
@@ -21,10 +25,6 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-<<<<<<< HEAD
-        "jquery": "^3.6.4"
-=======
         "boostrap": "^2.0.0"
->>>>>>> 996dfc7af0ca7a39d44d395439f12d50a37386c1
     }
 }
