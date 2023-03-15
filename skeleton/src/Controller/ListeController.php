@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\ListeModifyType;
+use App\Form\ModifyListeType;
 use App\Repository\ContientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +23,27 @@ class ListeController extends AbstractController
     #[Route('/liste_show/{id}', name: 'liste_show')]
     public function index(Int $id, ListeRepository $listeRepo, 
     MagasinRepository $magasinRepo,
-    ArticleRepository $articleRepo): Response
+    ArticleRepository $articleRepo,
+    Request $request,
+    EntityManagerInterface $entityManager): Response
     {
+        $form = $this->createForm(ListeModifyType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $liste = $form->getData();
+            $liste->setTitre($liste->getTitre());
+            $liste->setDescription($liste->getDescription());
+            $entityManager->persist($liste);
+            $entityManager->flush();
+            return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+        }
         $liste = $listeRepo->find($id);
         return $this->render('liste/index.html.twig', [
             'controller_name' => 'ListeController',
             'liste' => $liste,
             'magasins' => $magasinRepo->findAll(),
             'articles' => $articleRepo->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
