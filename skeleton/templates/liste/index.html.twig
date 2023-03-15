@@ -21,20 +21,24 @@
 
         <div class="settings card-header">
             <div class="sort row">
-                <div class="sort-by col-6">
+                <div class="sort-by col-4">
                     <label>Trier par : </label>
                     <select name="sort-by form-control">
                         <option value="nom">Nom</option>
                         <option value="prix">Prix</option>
                     </select>
                 </div>
-                <div class="sort-order col-6">
+                <div class="sort-order col-4">
                     <label>Ordre : </label>
                     <select name="sort-order form-control">
                         <option value="asc">Croissant</option>
                         <option value="desc">Décroissant</option>
                     </select>
                 </div>
+                <div class="sort-order col-4">
+                    <label>Suprrimer : </label>
+                    <a href="{{ path('liste_delete',{'id': liste.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a>
+            
             </div>
         </div>
 
@@ -45,7 +49,7 @@
                 <li class="form-check" style="list-style-type: none;">
                     <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
                     <!-- setting icon at the end of the line -->
-                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.propose.article.nom }} ({{ contient.propose.prix }}€)</span> <i class="fas fa-cog cog-option"></i></p>
+                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.propose.article.nom }} ({{ contient.propose.prix }}€) </span> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> <i class="fas fa-cog cog-option"></i></span></p>
                 </li>
             {% endfor %}
         </ul>
