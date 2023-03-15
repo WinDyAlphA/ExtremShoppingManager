@@ -19,7 +19,7 @@ class Article
     private ?string $nom = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    private ?type $type = null;
+    private ?Type $type = null;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Propose::class)]
     private Collection $proposess;
@@ -46,12 +46,12 @@ class Article
         return $this;
     }
 
-    public function getType(): ?type
+    public function getType(): ?Type
     {
         return $this->type;
     }
 
-    public function setType(?type $type): self
+    public function setType(?Type $type): self
     {
         $this->type = $type;
 

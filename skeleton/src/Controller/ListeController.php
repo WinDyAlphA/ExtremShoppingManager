@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ListeRepository;
 use App\Controller\ListeController;
+use App\Repository\MagasinRepository;
+use App\Repository\ArticleRepository;
 use App\Form\NewListeType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,12 +19,16 @@ use App\Entity\Liste;
 class ListeController extends AbstractController
 {
     #[Route('/liste_show/{id}', name: 'liste_show')]
-    public function index(Int $id, ListeRepository $listeRepo): Response
+    public function index(Int $id, ListeRepository $listeRepo, 
+    MagasinRepository $magasinRepo,
+    ArticleRepository $articleRepo): Response
     {
         $liste = $listeRepo->find($id);
         return $this->render('liste/index.html.twig', [
             'controller_name' => 'ListeController',
             'liste' => $liste,
+            'magasins' => $magasinRepo->findAll(),
+            'articles' => $articleRepo->findAll(),
         ]);
     }
 
