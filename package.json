@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "boostrap": "^2.0.0",
+    "node-sass": "^8.0.0",
+    "sass-loader": "^13.2.0"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.6",
+    "jquery": "^3.6.4",
+    "query": "^0.2.0"
+  }
+}

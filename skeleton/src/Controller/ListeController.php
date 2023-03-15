@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Repository\ContientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ListeRepository;
-use App\Controller\ListeController;
 use App\Repository\MagasinRepository;
 use App\Repository\ArticleRepository;
 use App\Form\NewListeType;
@@ -50,4 +50,31 @@ class ListeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/liste/liste_delete/{id}', name: 'liste_delete')]
+
+    public function delete(Int $id, ListeRepository $listeRepo, EntityManagerInterface $entityManager, ContientRepository $contientRepo): Response
+    {
+        $liste = $listeRepo->find($id);
+        $contients = $contientRepo->findBy(['liste' => $liste]);
+        foreach ($contients as $contient) {
+            $entityManager->remove($contient);
+        }
+        $entityManager->remove($liste);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/liste/article_delete/{id}/{contientId}', name: 'article_delete')]
+
+    public function deleteArticle(Int $id, Int $contientId, ListeRepository $listeRepo, EntityManagerInterface $entityManager, ArticleRepository $articleRepository, ContientRepository $contientRepository): Response
+    {
+        $contient = $contientRepository->find($contientId);
+        $entityManager->remove($contient);
+        $entityManager->flush();
+        return $this->redirectToRoute('liste_show', ['id' => $id]);
+
+    
+    }
+
 }
