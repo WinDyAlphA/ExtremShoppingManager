@@ -27,7 +27,17 @@ class ListeController extends AbstractController
         EntityManagerInterface $entityManager
         ): Response
     {
+        $user = $this->getUser();
         $liste = $listeRepo->find($id);
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user || $user->getRoles()[0] != "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+    
         $magasins = $magasinRepo->findAll();
         $form = $this->createForm(AddArticleToListType::class, null, array('magasins' => $magasins));
         $form->handleRequest($request);
