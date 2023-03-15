@@ -49,7 +49,7 @@
                 <li class="form-check" style="list-style-type: none;">
                     <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
                     <!-- setting icon at the end of the line -->
-                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.propose.article.nom }} ({{ contient.propose.prix }}€) </span> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> <i class="fas fa-cog cog-option"></i></span></p>
+                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.quantite }}x {{ contient.propose.article.nom }} ({{ contient.propose.prix }}€) </span> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> <i class="fas fa-cog cog-option"></i></span></p>
                 </li>
             {% endfor %}
         </ul>

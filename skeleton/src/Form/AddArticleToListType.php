@@ -26,6 +26,7 @@ class AddArticleToListType extends AbstractType
         'placeholder' => 'Sélectionnez un article',
         'attr' => array('class' => 'select2'),
     ))
+    ->add('quantite')
     ->add('Ajouter', SubmitType::class);
 
     }

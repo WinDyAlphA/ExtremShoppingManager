@@ -36,7 +36,7 @@ class ListeController extends AbstractController
             $propose = $contient->getPropose();
             $contient->setPropose($propose);
             $contient->setListe($liste);
-            $contient->setQuantite(1);
+            $contient->setQuantite($contient->getQuantite());
             $contient->setAchete(false);
 
             $entityManager->persist($contient);
