@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<div class="example-wrapper">
+    <!-- Allow the user to add a new "Magasin", a new "Article" or a new "Propose" with dedicated forms -->
+    <h1>Administration</h1>
+    <h2>Magasin</h2>
+    {{ form_start(formMagasin) }}
+    {{ form_widget(formMagasin) }}
+    {{ form_end(formMagasin) }}
+    <h2>Article</h2>
+    {{ form_start(formArticle) }}
+    {{ form_widget(formArticle) }}
+    {{ form_end(formArticle) }}
+    <h2>Propose</h2>
+    {{ form_start(formPropose) }}
+    {{ form_widget(formPropose) }}
+    {{ form_end(formPropose) }}
+
+    
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+
+</div>
+{% endblock %}

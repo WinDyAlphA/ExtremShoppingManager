@@ -28,22 +28,29 @@ class ListeController extends AbstractController
         Request $request, 
         EntityManagerInterface $entityManager
         ): Response
-    MagasinRepository $magasinRepo,
-    ArticleRepository $articleRepo,
-    Request $request,
-    EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ListeModifyType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $liste = $form->getData();
+
+        $formModify = $this->createForm(ListeModifyType::class);
+        $formModify->handleRequest($request);
+        if ($formModify->isSubmitted() && $formModify->isValid()) {
+            $liste = $formModify->getData();
             $liste->setTitre($liste->getTitre());
             $liste->setDescription($liste->getDescription());
             $entityManager->persist($liste);
             $entityManager->flush();
             return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
         }
+        $user = $this->getUser();
         $liste = $listeRepo->find($id);
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+    
         $magasins = $magasinRepo->findAll();
         $form = $this->createForm(AddArticleToListType::class, null, array('magasins' => $magasins));
         $form->handleRequest($request);
@@ -65,6 +72,7 @@ class ListeController extends AbstractController
             'magasins' => $magasinRepo->findAll(),
             'articles' => $articleRepo->findAll(),
             'form' => $form->createView(),
+            'formModify' => $formModify->createView(),
         ]);
     }
 
