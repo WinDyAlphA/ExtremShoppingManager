@@ -10,16 +10,28 @@ use App\Form\MagasinType;
 use App\Form\ProposeType;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
+use App\Repository\TypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(ArticleRepository $articleRepo, MagasinRepository $magasinRepo, EntityManagerInterface $em, Request $request): Response
+    public function index(ArticleRepository $articleRepo, 
+        MagasinRepository $magasinRepo, 
+        TypeRepository $typeRepo,
+        EntityManagerInterface $em, 
+        Request $request,
+        ): Response
     {
+        //Check if user is admin
+        // if (!$this->isGranted('ROLE_ADMIN')) {
+        //     return $this->redirectToRoute('app_home');
+        // }
         $formMagasin = $this->createForm(MagasinType::class);
-        $formArticle = $this->createForm(ArticleType::class);
+        $formArticle = $this->createForm(ArticleType::class, null, array(
+            'types' => $typeRepo->findAll(),
+        ));
         $fromPropose = $this->createForm(ProposeType::class, null, array(
             'articles' => $articleRepo->findAll(),
             'magasins' => $magasinRepo->findAll(),
@@ -29,17 +41,14 @@ class AdminController extends AbstractController
         $fromPropose->handleRequest($request);
         if ($formArticle->isSubmitted() && $formArticle->isValid()) {
             $article = $formArticle->getData();
-            $em->persist($article);
-            $em->flush();
+            $articleRepo->save($article, true);
             return $this->redirectToRoute('app_admin');
-        }
-        if ($formMagasin->isSubmitted() && $formMagasin->isValid()) {
+        } else if ($formMagasin->isSubmitted() && $formMagasin->isValid()) {
             $magasin = $formMagasin->getData();
             $em->persist($magasin);
             $em->flush();
             return $this->redirectToRoute('app_admin');
-        }
-        if ($fromPropose->isSubmitted() && $fromPropose->isValid()) {
+        } else if ($fromPropose->isSubmitted() && $fromPropose->isValid()) {
             $propose = $fromPropose->getData();
             $entityManager->persist($propose);
             $entityManager->flush();

@@ -34,8 +34,8 @@ class ListeController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         // If the user is not the owner of the list, redirect to home.
-        if ($liste->getUtilisateur() != $user || $user->getRoles()[0] != "ROLE_ADMIN") {
-            return $this->redirectToRoute('app_home');
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+             return $this->redirectToRoute('app_home');
         }
     
         $magasins = $magasinRepo->findAll();
