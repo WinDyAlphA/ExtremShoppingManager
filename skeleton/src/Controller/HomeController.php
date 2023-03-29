@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     {
         
         $listes = $this->getUser()->getListe();
-        if(count($listes) == 0){
+        if(count($listes) == 0 || count($listes) == null){
             $counter = 1;
         } else {
             $counter = count($listes);
