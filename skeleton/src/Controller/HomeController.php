@@ -27,6 +27,8 @@ class HomeController extends AbstractController
             $total += $liste->getTotal();
         }
         $average = $total / $counter;
+        // Round to 2 decimals
+        $average = round($average, 2);
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'listes' => $listes,

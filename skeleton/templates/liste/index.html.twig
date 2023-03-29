@@ -38,13 +38,13 @@
                 <div class="sort-order col-4">
                     <label>Supprimer : </label>
                     <a href="{{ path('liste_delete',{'id': liste.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a>
-
+                </div>  
             </div>
         </div>
 
         <ul class="card-body">
         
-        <h2>Liste des articles : </h2><br>
+            <h2>Liste des articles : </h2><br>
             {% for contient in liste.contient %}
                 <li class="form-check" style="list-style-type: none;">
                     <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
