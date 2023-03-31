@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\ListeModifyType;
+use App\Form\ModifyListeType;
+use App\Form\QuantityType;
+
 use App\Repository\ContientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,26 +26,49 @@ use App\Entity\Contient;
 
 class ListeController extends AbstractController
 {
-    #[Route('/liste_show/{id}', name: 'liste_show')]
-    public function index(Int $id, ListeRepository $listeRepo, 
+    #[Route('/liste_show/{id}/', name: 'liste_show')]
+    public function index(Liste $liste, ListeRepository $listeRepo, 
         MagasinRepository $magasinRepo,
         ArticleRepository $articleRepo, 
         Request $request, 
         EntityManagerInterface $entityManager
+
         ): Response
-    {
+    {   
+        $contient = new Contient();
+        $contient->setListe($liste);
+        $formUp = $this->createForm(QuantityType::class, $contient);
+        $formUp->handleRequest($request);
+        if ($formUp->isSubmitted() && $formUp->isValid()) {
+            
+            $entityManager->persist($contient);
+            $entityManager->flush();
+            return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+        }
+
+        $formModify = $this->createForm(ListeModifyType::class);
+        $formModify->handleRequest($request);
+        if ($formModify->isSubmitted() && $formModify->isValid()) {
+            $liste = $formModify->getData();
+            $liste->setTitre($liste->getTitre());
+            $liste->setDescription($liste->getDescription());
+            $entityManager->persist($liste);
+            $entityManager->flush();
+            return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+        }
         $user = $this->getUser();
-        $liste = $listeRepo->find($id);
+
         // If the user is not logged in, redirect to login
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
         // If the user is not the owner of the list, redirect to home.
         if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
-             return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home');
         }
     
         $magasins = $magasinRepo->findAll();
+
         $form = $this->createForm(AddArticleToListType::class, null, array('magasins' => $magasins));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,6 +89,8 @@ class ListeController extends AbstractController
             'magasins' => $magasinRepo->findAll(),
             'articles' => $articleRepo->findAll(),
             'form' => $form->createView(),
+            'formModify' => $formModify->createView(),
+            'formUp' => $formUp->createView(),
         ]);
     }
 
@@ -86,9 +115,9 @@ class ListeController extends AbstractController
 
     #[Route('/liste/liste_delete/{id}', name: 'liste_delete')]
 
-    public function delete(Int $id, ListeRepository $listeRepo, EntityManagerInterface $entityManager, ContientRepository $contientRepo): Response
-    {
-        $liste = $listeRepo->find($id);
+    public function delete(Liste $liste, ListeRepository $listeRepo, EntityManagerInterface $entityManager, ContientRepository $contientRepo): Response
+    {   
+
         $contients = $contientRepo->findBy(['liste' => $liste]);
         foreach ($contients as $contient) {
             $entityManager->remove($contient);
