@@ -9,11 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ListeRepository;
 use App\Repository\MagasinRepository;
 use App\Repository\ArticleRepository;
+use App\Repository\ProposeRepository;
 use App\Form\NewListeType;
+use App\Form\ChooseProposeType;
 use App\Form\AddArticleToListType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Liste;
+use App\Entity\Contient;
 
 
 
@@ -103,8 +106,58 @@ class ListeController extends AbstractController
         $entityManager->remove($contient);
         $entityManager->flush();
         return $this->redirectToRoute('liste_show', ['id' => $id]);
+    }
 
+    #[Route('/liste/add_article/{id}', name: 'liste_add_article')]
+    public function addArticle(Int $id, ListeRepository $listeRepo, 
+        MagasinRepository $magasinRepo,
+        ArticleRepository $articleRepo,
+        ProposeRepository $proposeRepo,
+        Request $request, 
+        EntityManagerInterface $entityManager
+        ): Response
+    {
+        $user = $this->getUser();
+        $liste = $listeRepo->find($id);
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+             return $this->redirectToRoute('app_home');
+        }
     
+        $magasins = $magasinRepo->findAll();
+        $articleForm = $this->createForm(ChooseProposeType::class, null, 
+            array('articles' => $articleRepo->findAll(), 
+            'magasins' => $magasins, 
+            'proposes' => $proposeRepo->findAll()));
+        
+        
+        $articleForm->handleRequest($request);
+
+        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+    
+            $contient = $articleForm->getData();
+            $contient->setListe($liste);
+            $contient->setAchete(false);
+            $entityManager->persist($contient);
+            $entityManager->flush();
+            return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+            
+        }
+        
+
+
+        return $this->render('liste/add_article.html.twig', [
+            'controller_name' => 'ListeController',
+            'liste' => $liste,
+            'magasins' => $magasinRepo->findAll(),
+            'articles' => $articleRepo->findAll(),
+            'form' => $articleForm->createView(),
+            'proposes' => $proposeRepo->findAll(),
+        ]);
     }
 
 }

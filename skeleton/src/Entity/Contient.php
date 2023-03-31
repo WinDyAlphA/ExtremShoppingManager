@@ -78,4 +78,21 @@ class Contient
         return $this;
     }
 
+    /*
+    public function getMagasin(): ?Magasin
+    {
+        return $this->getPropose()->getMagasin();
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->getPropose()->getArticle();
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->getPropose()->getPrix();
+    }
+    */
+
 }

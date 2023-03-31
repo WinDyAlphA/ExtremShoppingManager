@@ -49,10 +49,10 @@
                 <li class="form-check" style="list-style-type: none;">
                     <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
                     <!-- setting icon at the end of the line -->
-                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.quantite }}x {{ contient.propose.article.nom }} ({{ contient.propose.prix }}€) </span> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> <i class="fas fa-cog cog-option"></i></span></p>
+                    <p style="width: 100%; display: flex; justify-content: space-between"><span>{{ contient.quantite }}x {{ contient.propose.article.nom }} ({{ contient.propose.prix * contient.quantite }}€) - {{ contient.propose.magasin.nom }} </span> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> <i class="fas fa-cog cog-option"></i></span></p>
                 </li>
             {% endfor %}
-        </ul>
+        {# </ul>
 
         <div class="card-footer">
             {{ form_start(form) }}
@@ -65,7 +65,8 @@
                     $('.select2').select2();
                 });
             </script>
-        </div>
+        </div> #}
+        <a href="{{ path('liste_add_article',{'id': liste.id}) }}" class="btn btn-primary">Ajouter un article</a>
     </article>
     <br />
     <button type="submit" class="btn btn-primary">Modifier la liste</button>
