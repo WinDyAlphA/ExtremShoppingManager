@@ -1,6 +1,9 @@
 @import "~bootstrap/scss/bootstrap";
-
+@import "./header.scss";
+@import "./liste.scss";
+@import "./profil.scss";
 /* Centre le formulaire dans la page */
+
 form {
     display: flex;
     flex-direction: column;
@@ -51,9 +54,14 @@ form {
     button:active {
     background-color: #0053a3;
     }
+    a {
+        text-decoration: none;
+        color: rgb(41, 41, 41);
+    }
 
 
-.cog-option {
+
+.cog-option, .flexLogo {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,6 +69,25 @@ form {
     cursor: pointer;
 }
 
+.checkboxItem {
+    width: 20px;
+    height: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
 .cog-option:hover {
     transform: rotate(90deg);
+}
+
+.itemWrapper {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+}
+.container {
+    margin-top: 11vh;
+}
+li {
+    list-style: none;
 }
