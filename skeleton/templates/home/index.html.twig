@@ -14,7 +14,18 @@
     <div class="listesContainer">
     {% for liste in listes %}
         <a href=" {{ path('liste_show', {'id': liste.id}) }} ">
-                            <div class="listeWrapper">
+            <div class="paper">
+            <div class="pin">
+            <div class="shadow"></div>
+            <div class="metal"></div>
+            <div class="bottom-circle"></div>
+            </div>
+            <div class="headerListeWrapper">
+                <h2>{{ liste.titre }}</h2>
+                <p>{{liste.contient.count}}</p>
+            </div>
+            </div>
+                            {# <div class="listeWrapper">
                                     <div class="headerListeWrapper">
                                         <h2>{{ liste.titre }}</h2>
                                         <p>{{liste.contient.count}}</p>
@@ -29,7 +40,7 @@
                                             
                                         </ul>
                                     </div>
-                                </div>
+                                </div> #}
         </a>
     {% endfor %}
         <div class="buttonWrapperListe">
