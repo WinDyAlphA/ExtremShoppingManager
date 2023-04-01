@@ -2,74 +2,55 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 
-{% block body %}
+{% block content %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    
 </style>
 
 <div class="container">
-    <h1 class="text-center">Bienvenue sur votre <i>DashBoard</i></h1>
-    <br />
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Listes que vous avez créé</h2>
-                </div>
-                <div class="card-body">
-                    <div class="example-wrapper">
-                        <ul class="list-group">
-                            {% for liste in listes %}
-                                <a href=" {{ path('liste_show', {'id': liste.id}) }} ">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ liste.titre }}
-                                    <div class="d-flex">
-                                        <span class="badge badge-primary badge-pill" style="background-color: #0000FF;">{{liste.contient.count}}</span>
-                                        <a href="{{ path('liste_delete',{'id': liste.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> 
-                                    </div>
-                                    </li>
-                                </a>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ path('liste_new') }}" class="btn btn-primary">Créer une nouvelle liste</a>
-                </div>
+    <h1 class="text-center page-title">Vos listes</h1>
+    <div class="listesContainer">
+    {% for liste in listes %}
+        <a href=" {{ path('liste_show', {'id': liste.id}) }} " class="list-link">
+            <div class="paper">
+            <div class="pin">
             </div>
-            <br />
-            <div class="card">
-                <div class="card-header">
-                    <h2>Statistiques de votre compte:</h2>
-                </div>
-                <div class="card-body">
-                    <section class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Nombre de listes créées</h3>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="text-center">{{listes.count}}</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3>Total moyen par liste</h3>
-                                </div>
-                                <div class="card-body">
-                                    <h1 class="text-center">{{average}}€</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+            <div class="headerListeWrapper">
+                <h2>{{ liste.titre }}</h2>
+                <p>{{liste.contient.count}}</p>
+            </div>
+            </div>
+                            {# <div class="listeWrapper">
+                                    <div class="headerListeWrapper">
+                                        <h2>{{ liste.titre }}</h2>
+                                        <p>{{liste.contient.count}}</p>
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            {% for contient in liste.contient %}
+                                                {% for propose in contient.propose %}
+                                                    <li>{{propose.nom}}</li>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            
+                                        </ul>
+                                    </div>
+                                </div> #}
+        </a>
+    {% endfor %}
+        <a href=" {{ path('liste_new') }} " class="list-link">
+            <div class="paper">
+            <div class="pin">
+            </div>
+            <div class="headerListeWrapper">
+                <h2> + Nouvelle liste</h2>
             </div>
         </div>
     </div>
+    <br />
+
 </div>
 
 

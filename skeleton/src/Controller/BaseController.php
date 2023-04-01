@@ -20,7 +20,7 @@ class BaseController extends AbstractController
     #[Route('/', name: 'presentation')]
     public function index(): Response
     {
-        // Si l'utilisateur est connecté, supprimez la connexion
+        // Si l'utilisateur est connecté, supprimer la connexion
         $token = $this->tokenStorage->getToken();
         if ($token && $token->getUser()) {
             $this->tokenStorage->setToken(null);

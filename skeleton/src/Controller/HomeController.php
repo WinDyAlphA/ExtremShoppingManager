@@ -15,6 +15,11 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(ListeRepository $listeRepo): Response
     {
+
+        // If not logged in, redirect to login page
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         
         $listes = $this->getUser()->getListe();
         if(count($listes) == 0 || count($listes) == null){

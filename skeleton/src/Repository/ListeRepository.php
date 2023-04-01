@@ -49,6 +49,15 @@ class ListeRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getAll(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
 //    /**
 //     * @return Liste[] Returns an array of Liste objects
 //     */

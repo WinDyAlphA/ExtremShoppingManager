@@ -2,9 +2,9 @@
 
 {% block title %}Hello ListeController!{% endblock %}
 
-{% block body %}
+{% block content %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; margin-top: 11vh; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style><!-- link js bootstrap (je sais faut changer) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -46,9 +46,18 @@
         
             <h2>Liste des articles : </h2><br>
             {% for contient in liste.contient %}
-                <li class="form-check" style="list-style-type: none;">
-                    <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
-                    <div style="width: 100%; display: flex; justify-content: space-between"><button data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a><button data-toggle="modal" data-target="#modifyModal">modifier</button> <i class="fas fa-cog cog-option"></i></span></div>
+                <li class="form-check itemWrapper" style="list-style-type: none;">
+                    <input type="checkbox" name="article" class="checkboxItem"value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
+                    <!-- setting icon at the end of the line -->
+                    <div style="width: 100%; display: flex; justify-content: space-between">
+                        <button data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> 
+                        <span style="display:flex;">
+                            <a class="flexLogo" href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}">
+                                <i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i>
+                            </a>
+
+                        </span>
+                    </div>
                     
                 </li>
                 <div class="modal fade" id="showItemModal" tabindex="-1" role="dialog" aria-hidden="true">
