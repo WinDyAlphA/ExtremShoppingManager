@@ -64,3 +64,36 @@ form {
 .cog-option:hover {
     transform: rotate(90deg);
 }
+
+.navbar {
+    font-size: 1.6rem;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar-brand {
+    display: flex;
+}
+
+.navbar-brand h1, .navbar-brand h2 {
+    margin: 5px;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

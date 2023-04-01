@@ -24,7 +24,10 @@
                                 <a href=" {{ path('liste_show', {'id': liste.id}) }} ">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{ liste.titre }}
-                                    <span class="badge badge-primary badge-pill" style="background-color: #0000FF;">{{liste.contient.count}}</span>
+                                    <div class="d-flex">
+                                        <span class="badge badge-primary badge-pill" style="background-color: #0000FF;">{{liste.contient.count}}</span>
+                                        <a href="{{ path('liste_delete',{'id': liste.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a> 
+                                    </div>
                                     </li>
                                 </a>
                             {% endfor %}

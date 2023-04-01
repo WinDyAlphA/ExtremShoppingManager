@@ -48,7 +48,6 @@
             {% for contient in liste.contient %}
                 <li class="form-check" style="list-style-type: none;">
                     <input type="checkbox" name="article" value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
-                    <!-- setting icon at the end of the line -->
                     <div style="width: 100%; display: flex; justify-content: space-between"><button data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> <span style="display:flex;"><a href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a><button data-toggle="modal" data-target="#modifyModal">modifier</button> <i class="fas fa-cog cog-option"></i></span></div>
                     
                 </li>
@@ -68,7 +67,7 @@
                         <img width="100" height="100" src={{ asset('build/images/' ~ contient.propose.article.image ) }} alt="pain">
                         <input type="range" id="rangeQuantity" class="rangeQuantity" name="rangeQuantity" min="0" max="100">
                         {{ form_start(formUp) }}
-                            {{ form_widget(formUp) }}
+                            {#{{ form_widget(formUp) }} #}
                         {{ form_end(formUp) }}
                     </div>
                     <div class="modal-footer">

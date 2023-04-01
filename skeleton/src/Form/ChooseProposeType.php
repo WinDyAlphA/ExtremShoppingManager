@@ -26,10 +26,10 @@ class ChooseProposeType extends AbstractType
                     return $propose->getPrix();
                 },
                 'attr' => array('id' => 'proposeChoice'),
-                // 'label' => false,
-                // 'row_attr' => [
-                //     'class' => 'd-none',
-                // ],
+                'label' => false,
+                'row_attr' => [
+                    'class' => 'd-none',
+                ],
             ])
             ->add('Ajouter', SubmitType::class, [
                 'attr' => array('id' => 'ajouterButton'),
