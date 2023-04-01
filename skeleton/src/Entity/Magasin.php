@@ -24,6 +24,12 @@ class Magasin
     #[ORM\OneToMany(mappedBy: 'magasin', targetEntity: Propose::class)]
     private Collection $proposess;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $GPSlong = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $GPSlat = null;
+
 
     public function __construct()
     {
@@ -85,6 +91,30 @@ class Magasin
                 $proposess->setMagasin(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGPSlong(): ?float
+    {
+        return $this->GPSlong;
+    }
+
+    public function setGPSlong(?float $GPSlong): self
+    {
+        $this->GPSlong = $GPSlong;
+
+        return $this;
+    }
+
+    public function getGPSlat(): ?float
+    {
+        return $this->GPSlat;
+    }
+
+    public function setGPSlat(?float $GPSlat): self
+    {
+        $this->GPSlat = $GPSlat;
 
         return $this;
     }
