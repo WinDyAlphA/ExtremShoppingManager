@@ -37,18 +37,17 @@ form {
     
     /* Donne un style au bouton */
     button {
-    background-color: #007bff;
-    border: none;
+    background-color: transparent;
+    border: 1px solid #5d5d5d;
     border-radius: 5px;
-    color: white;
+    color: black;
     padding: 10px 20px;
     font-size: 1.2rem;
+    transition: all 0.3s ease;
     cursor: pointer;
     }
-    
-    /* Donne un style au bouton lorsque la souris passe dessus */
     button:hover {
-    background-color: #0069d9;
+        background-color: white;
     }
     
     /* Donne un style au bouton lorsqu'il est appuyé */

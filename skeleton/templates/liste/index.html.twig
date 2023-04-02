@@ -4,7 +4,7 @@
 
 {% block content %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; margin-top: 11vh; }
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style><!-- link js bootstrap (je sais faut changer) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -45,12 +45,30 @@
         <ul class="card-body">
         
             <h2>Liste des articles : </h2><br>
+
+            <div class="legend">
+                {% for magasin in usedMagasins %}
+                    {% set index = loop.index %}
+                    {% set index = index % 4 %}
+                    {% set index = index + 1 %}
+                    <div class="mag{{index}}">{{ magasin.nom }}</div>
+                {% endfor %}
+            </div>
+
             {% for contient in liste.contient %}
-                <li class="form-check itemWrapper" style="list-style-type: none;">
+                {% set index = 0 %}
+                {% for magasin in usedMagasins %}
+                    {% if magasin.id == contient.propose.magasin.id %}
+                        {% set index = loop.index %}
+                    {% endif %}
+                {% endfor %}
+                {% set index = index % 4 %}
+                {% set index = index + 1 %}
+                <li class="form-check itemWrapper mag{{index}}" style="list-style-type: none;">
                     <input type="checkbox" name="article" class="checkboxItem"value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
                     <!-- setting icon at the end of the line -->
                     <div style="width: 100%; display: flex; justify-content: space-between">
-                        <button data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> 
+                        <button class="mag{{index}}"data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> 
                         <span style="display:flex;">
                             <a class="flexLogo" href="{{ path('article_delete',{'id': liste.id,'contientId':contient.id}) }}">
                                 <i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i>
@@ -147,7 +165,7 @@
                 });
             </script>
         </div> #}
-        <a href="{{ path('liste_add_article',{'id': liste.id}) }}" class="btn btn-primary">Ajouter un article</a>
+        <a href="{{ path('liste_add_article',{'id': liste.id}) }}" class="btn btn-primary addArticle">Ajouter un article</a>
     </article>
     <br />
     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modifyModal">Modifier la liste</button>

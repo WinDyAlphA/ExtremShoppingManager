@@ -23,6 +23,20 @@ use App\Entity\Liste;
 use App\Entity\Contient;
 
 
+function aversine($lat1, $lon1, $lat2, $lon2) {
+    $R = 6371; // km
+    $dLat = deg2rad($lat2-$lat1);
+    $dLon = deg2rad($lon2-$lon1);
+    $lat1 = deg2rad($lat1);
+    $lat2 = deg2rad($lat2);
+
+    $a = sin($dLat/2) * sin($dLat/2) +
+        sin($dLon/2) * sin($dLon/2) * cos($lat1) * cos($lat2); 
+    $c = 2 * atan2(sqrt($a), sqrt(1-$a)); 
+    $d = $R * $c;
+    return $d;
+}
+
 
 class ListeController extends AbstractController
 {
@@ -35,6 +49,15 @@ class ListeController extends AbstractController
 
         ): Response
     {   
+        $user = $this->getUser();
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
         $contient = new Contient();
         $contient->setListe($liste);
         $formUp = $this->createForm(QuantityType::class, $contient);
@@ -56,16 +79,7 @@ class ListeController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
         }
-        $user = $this->getUser();
 
-        // If the user is not logged in, redirect to login
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-        // If the user is not the owner of the list, redirect to home.
-        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
-            return $this->redirectToRoute('app_home');
-        }
     
         $magasins = $magasinRepo->findAll();
 
@@ -83,6 +97,16 @@ class ListeController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
         }
+
+        // Get all the different Magasins linked to the list
+        $magasins = array();
+        foreach ($liste->getContient() as $contient) {
+            $magasin = $contient->getPropose()->getMagasin();
+            if (!in_array($magasin, $magasins)) {
+                array_push($magasins, $magasin);
+            }
+        }
+        
         return $this->render('liste/index.html.twig', [
             'controller_name' => 'ListeController',
             'liste' => $liste,
@@ -91,6 +115,7 @@ class ListeController extends AbstractController
             'form' => $form->createView(),
             'formModify' => $formModify->createView(),
             'formUp' => $formUp->createView(),
+            'usedMagasins' => $magasins,
         ]);
     }
 
@@ -158,6 +183,39 @@ class ListeController extends AbstractController
         }
     
         $magasins = $magasinRepo->findAll();
+
+        // Get an array of the loc of the magasins used in the list
+        $magasinsLoc = array();
+        foreach ($liste->getContient() as $contient) {
+            $magasin = $contient->getPropose()->getMagasin();
+            if (!in_array($magasin, $magasinsLoc)) {
+                echo $magasin->getNom();
+                array_push($magasinsLoc, array($magasin->getGPSlat(), $magasin->getGPSlong()));
+            }
+        }
+
+        // Same for proposeList
+        $proposeList = $proposeRepo->findAll();
+        usort($proposeList, function($a, $b) use ($magasinsLoc) {
+            $lat1 = $a->getMagasin()->getGPSlat();
+            $lon1 = $a->getMagasin()->getGPSlong();
+            $lat2 = $b->getMagasin()->getGPSlat();
+            $lon2 = $b->getMagasin()->getGPSlong();
+            $distA = 0;
+            $distB = 0;
+            foreach ($magasinsLoc as $loc) {
+                $tmp1 = aversine($loc[0], $loc[1], $lat1, $lon1);
+                $tmp2 = aversine($loc[0], $loc[1], $lat2, $lon2);
+                if ($tmp1 < $distA || $distA == 0) {
+                    $distA = $tmp1;
+                }
+                if ($tmp2 < $distB || $distB == 0) {
+                    $distB = $tmp2;
+                }
+            }
+            return $distA <=> $distB;
+        });
+
         $articleForm = $this->createForm(ChooseProposeType::class, null, 
             array('articles' => $articleRepo->findAll(), 
             'magasins' => $magasins, 
@@ -182,11 +240,13 @@ class ListeController extends AbstractController
         return $this->render('liste/add_article.html.twig', [
             'controller_name' => 'ListeController',
             'liste' => $liste,
-            'magasins' => $magasinRepo->findAll(),
+            'magasins' => $magasins,
             'articles' => $articleRepo->findAll(),
             'form' => $articleForm->createView(),
-            'proposes' => $proposeRepo->findAll(),
+            'proposes' => $proposeList,
         ]);
     }
 
+
 }
+

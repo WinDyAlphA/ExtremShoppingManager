@@ -8,16 +8,18 @@
   justify-content: space-between;
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid #eae8e8;
+  border: 1px solid #cccccc;
 }
 
 .list-link {
   width: 30%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .list-link:hover {
-  transform: scale(1.05);
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0.2);
 }
 
 .page-title {
