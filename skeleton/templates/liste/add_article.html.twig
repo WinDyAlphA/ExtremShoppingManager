@@ -18,9 +18,8 @@
     <h1> {{ liste.titre }} </h1>
 
     <article class="card">
-    <!-- List of Article -->
-    <h2>Choisissez votre article</h2>
     <section class="container">
+        <h2>Choisissez votre article</h2>
         <!-- Form with every Article -->
         <select id="article_select" class="form-control">
             <option value="">Choisissez un article</option>
@@ -28,23 +27,39 @@
                 <option value="{{ loop.index0 }}">{{ article.nom }}</option>
             {% endfor %}
         </select>
+        <label>Rechercher un article</label>
+        <input type="text" id="searchArticle" class="form-control" placeholder="Rechercher un article">
+        <script>
+
+        </script>
+        <!-- Transform the previous select into a fluid container where each article is dsiplayed as a litlle card with its image and its name -->
+        <div class="article_container">
+            {% for article in articles %}
+                <div class="article_card" id="article_{{ article.id - 1 }}">
+                    <img src="{{ asset('build/images/' ~ article.image) }}" alt="image de l'article {{ article.nom }}">
+                    <p>{{ article.nom }}</p>
+                </div>
+            {% endfor %}
+            <script>
+
+            </script>
+        </div>
+        <label>Choisissez un magasin</label>
         <select id="magasin_select" class="form-control">
             <option value="">Choisissez un magasin</option>
         </select>
 
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <div class="form-group">
-            <p>Prix : <span id="priceValue"></span></p>
+        {{ form_widget(form.propose, {'attr': {'style': 'display: none'}}) }}
+        <label>Quantité</label>
+        {{ form_widget(form.quantite) }}
+        <p>Prix : <span id="priceValue"></span></p>
+        {{ form_widget(form.Ajouter) }}
         {{ form_end(form) }}
+        <br />
     </section>
     
     <script>
-        // Get the magasin input and fill it when the user select an article
-        var articleInput = document.getElementById('article_select');
-        var magasinInput = document.getElementById('magasin_select');
-        var priceValue = document.getElementById('priceValue');
-
         // Get the list of propose
         var proposeList = [];
         {% for propose in proposes %}
@@ -66,104 +81,6 @@
                 nom: "{{ magasin.nom }}"
             });
         {% endfor %}
-        
-        articleInput.addEventListener('change', function() {
-            fillMagasins.call(this);
-            updatePrice();
-        });
-
-        magasinInput.addEventListener('change', function() {
-            updatePrice();
-        });
-
-        function fillMagasins() {
-            // Get the article id
-            var articleId = this.value;
-            // Get the list of magasin
-            var magasinList = getMagasinList(articleId);
-            // Fill the magasin input
-            fillMagasinInput(magasinList);
-        }
-
-        function getMagasinList(articleId) {
-            // Get the list of magasin
-            var magasinList = [];
-            // For each propose
-            for (var i = 0; i < proposeList.length; i++) {
-                // If the article id is the same
-                intArticleId = parseInt(articleId) + 1;
-                console.log('list: ' + proposeList[i].article.id)
-                console.log('article: ' + intArticleId)
-                if (proposeList[i].article.id == intArticleId) {
-                    // Add the magasin to the list
-                    magasinList.push(proposeList[i].magasin);
-                }
-            }
-            return magasinList;
-        }
-
-        function fillMagasinInput(magasinList) {
-            // Clear the magasin input
-            magasinInput.innerHTML = '';
-            // Add the default option
-            magasinInput.innerHTML += '<option value="">Choisissez un magasin</option>';
-            // For each magasin
-            for (var i = 0; i < magasinList.length; i++) {
-                // Add the option
-                magasinInput.innerHTML += '<option value="' + magasinList[i].id + '">' + getMagasinName(magasinList[i].id) + '</option>';
-            }
-        }
-
-        function getMagasinName(magasinId) {
-            // For each magasin
-            for (var i = 0; i < magasinList.length; i++) {
-                // If the id is the same
-                if (magasinList[i].id == magasinId) {
-                    // Return the name
-                    return magasinList[i].nom;
-                }
-            }
-        }
-
-        function updatePrice() {
-            // Get the article id
-            var articleId = articleInput.value;
-            // Get the magasin id
-            var magasinId = magasinInput.value;
-            // Get the price
-            var propose = getPropose(articleId, magasinId);
-            let price = 0;
-            if (propose != undefined) {
-                price = propose.prix;
-                updateProposeInput(propose);
-            }
-            // Get the quantity
-            var quantity = document.getElementById('choose_propose_quantite').value;
-            // Update the price
-            priceValue.innerHTML = price * quantity;
-        }
-
-        function getPropose(articleId, magasinId) {
-            let intArticleId = parseInt(articleId) + 1;
-            // For each propose
-            for (var i = 0; i < proposeList.length; i++) {
-                // If the article id and the magasin id are the same
-                if (proposeList[i].article.id == intArticleId && proposeList[i].magasin.id == magasinId) {
-                    // Return the price
-                    return proposeList[i]
-                }
-            }
-        }
-
-        function updateProposeInput(propose) {
-            // Get the propose input
-            var proposeInput = document.getElementById('choose_propose_propose');
-            // Set the selected value of the propose input
-            let intProposeId = parseInt(propose.id) - 1;
-            proposeInput.value = intProposeId;
-            console.log(propose.id);
-        }
-
     </script>
 </div>
 {% endblock %}

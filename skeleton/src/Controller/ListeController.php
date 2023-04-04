@@ -248,7 +248,6 @@ class ListeController extends AbstractController
         foreach ($liste->getContient() as $contient) {
             $magasin = $contient->getPropose()->getMagasin();
             if (!in_array($magasin, $magasinsLoc)) {
-                echo $magasin->getNom();
                 array_push($magasinsLoc, array($magasin->getGPSlat(), $magasin->getGPSlong()));
             }
         }
