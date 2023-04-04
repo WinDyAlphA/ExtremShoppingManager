@@ -19,30 +19,14 @@
 
     <article class="card">
 
-        <div class="settings card-header">
-            <div class="sort row">
-                <div class="sort-by col-4">
-                    <label>Trier par : </label>
-                    <select name="sort-by form-control">
-                        <option value="nom">Nom</option>
-                        <option value="prix">Prix</option>
-                    </select>
-                </div>
-                <div class="sort-order col-4">
-                    <label>Ordre : </label>
-                    <select name="sort-order form-control">
-                        <option value="asc">Croissant</option>
-                        <option value="desc">Décroissant</option>
-                    </select>
-                </div>
-                <div class="sort-order col-4">
-                    <label>Supprimer : </label>
-                    <a href="{{ path('liste_delete',{'id': liste.id}) }}"><i class="fas fa-solid fa-trash" style="margin-top:4px; margin-right:5px; cursor:pointer;"></i></a>
-                </div>  
-            </div>
-        </div>
+        
 
         <ul class="card-body">
+
+            <div class="description">
+                <h2>Description : </h2>
+                <p>{{ liste.description }}</p>
+            </div>
         
             <h2>Liste des articles : </h2><br>
 
@@ -65,7 +49,12 @@
                 {% set index = index % 4 %}
                 {% set index = index + 1 %}
                 <li class="form-check itemWrapper mag{{index}}" style="list-style-type: none;">
-                    <input type="checkbox" name="article" class="checkboxItem"value="{{ contient.propose.article.id }}" class="form-check-input" id="article_{{ contient.propose.article.id }}">
+                <!-- When the checkbox is checked, redirect to the controller to update the database -->
+                    <input type="checkbox" name="article" class="checkboxItem" 
+                        value="{{ contient.propose.article.id }}" class="form-check-input" 
+                        id="article_{{ contient.propose.article.id }}" 
+                        {% if contient.achete %}checked{% endif %} 
+                        onclick="window.location.href='{{ path('contient_toggle',{'listeId': liste.id,'contientId':contient.id}) }}'">
                     <!-- setting icon at the end of the line -->
                     <div style="width: 100%; display: flex; justify-content: space-between">
                         <button class="mag{{index}}"data-toggle="modal" data-target="#showItemModal"> {{ contient.quantite }}x {{ contient.propose.article.nom }} - {{ contient.propose.prix }}€ </button> 
@@ -105,90 +94,53 @@
             </div>
         </div>
             {% endfor %}
-        {# </ul>
 
-        
-
-        <div class="modal fade" id="ModifyItemModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProdcutModalLabel">Modifier la liste</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                    
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    
-                </div>
-            </div>
-    </div>
-
-        <div class="card-footer">
-            <!-- Open modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProdcutModal">
-                Ajouter un article
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" id="addProdcutModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProdcutModalLabel">Ajouter un article</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- There is two part. One ta ask the store and the other to ask the article with select -->
-                        <div class="form-group">
-                            <label for="store">Choisir un magasin</label>
-                            <select class="form-control" id="store">
-                                {% for magasin in magasins %}
-                                    <option value="{{ magasin.id }}">{{ magasin.nom }}</option>
-                                {% endfor %}
-                            </select>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-            <br>
-
-            <script>
-                $(document).ready(function() {
-                    $('.select2').select2();
-                });
-            </script>
-        </div> #}
         <a href="{{ path('liste_add_article',{'id': liste.id}) }}" class="btn btn-primary addArticle">Ajouter un article</a>
+        <br />
+        <br />
+        <p id="total-cost">Total : {{ total }}€</p>
     </article>
     <br />
     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modifyModal">Modifier la liste</button>
+    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Supprimer la liste</button>
     <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProdcutModalLabel">Modifier la liste</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                    {{ form_start(formModify) }}
-                        {{ form_widget(formModify) }}
-                    {{ form_end(formModify) }}
-                    
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    
-                </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProdcutModalLabel">Modifier la liste</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            {{ form_start(formModify) }}
+                {{ form_widget(formModify) }}
+            {{ form_end(formModify) }}
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
     </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProdcutModalLabel">Supprimer la liste</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer cette liste ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                <a href="{{ path('liste_delete',{'id': liste.id}) }}" class="btn btn-danger">Oui</a>
+            </div>
+        </div>
 </div>
 {% endblock %}

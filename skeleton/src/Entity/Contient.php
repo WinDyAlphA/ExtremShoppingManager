@@ -50,7 +50,7 @@ class Contient
     public function setAchete(bool $achete): self
     {
         $this->achete = $achete;
-
+        
         return $this;
     }
 

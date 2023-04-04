@@ -22,6 +22,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Liste;
 use App\Entity\Contient;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 function aversine($lat1, $lon1, $lat2, $lon2) {
     $R = 6371; // km
@@ -116,8 +118,37 @@ class ListeController extends AbstractController
             'formModify' => $formModify->createView(),
             'formUp' => $formUp->createView(),
             'usedMagasins' => $magasins,
+            'total' => $liste->getTotal(),
         ]);
     }
+
+    // Route contain liste id and contient id
+    #[Route('/liste/contient_toggle/{listeId}/{contientId}', name: 'contient_toggle')]
+    #[ParamConverter('liste', class: 'App\Entity\Liste', options: ['id' => 'listeId'])]
+    public function toggle(
+        Liste $liste, 
+        ContientRepository $contientRepo,
+        Request $request, 
+        EntityManagerInterface $entityManager
+    ): Response
+    {   
+        $user = $this->getUser();
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+        $contientId = $request->attributes->get('contientId');
+        $contient = $contientRepo->find($contientId);
+        $contient->setAchete(!$contient->isAchete());
+        $entityManager->persist($contient);
+        $entityManager->flush();
+        return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+    }
+    
 
     #[Route('/liste/liste_new', name: 'liste_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
