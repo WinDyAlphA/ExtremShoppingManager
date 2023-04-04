@@ -18,6 +18,7 @@ class ProfilController extends AbstractController
     #[Route('/profil', name: 'app_profil')]
     public function index(ListeRepository $listeRepo,EntityManagerInterface $entityManager,ContientRepository $contientRepo, ProposeRepository $proposeRepo, ArticleRepository $articleRepo, TypeRepository $typeRepo): Response
     {
+        $user = $this->getUser();
         $listes = $this->getUser()->getListe();
         $pseudo = $this->getUser()->getPseudo();
         $articles = $articleRepo->findAll();
@@ -89,6 +90,9 @@ class ProfilController extends AbstractController
             'mostUsedMagasinsNames' => $mostUsedMagasinsNames,
             'mostUsedTypes' => $mostUsedTypesCount,
             'mostUsedTypesNames' => $mostUsedTypesNames,
+            'totalSpend' => $user->getTotalSpend(),
+            'mostExpensiveArticle' => $user->getMostExpensiveArticle(),
+            'cheapestArticle' => $user->getCheapestArticle(),
         ]);
     }
 }

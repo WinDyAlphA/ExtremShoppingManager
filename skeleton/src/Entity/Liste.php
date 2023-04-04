@@ -111,4 +111,27 @@ class Liste
         }
         return $total;
     }
+
+    public function getUnbuyedContient() : array
+    {
+        $unbuyedContient = [];
+        foreach ($this->getContient() as $contient) {
+            if (!$contient->isAchete()) {
+                $unbuyedContient[] = $contient;
+            }
+        }
+        return $unbuyedContient;
+    }
+
+    public function getBuyedContient() : array
+    {
+        $buyedContient = [];
+        foreach ($this->getContient() as $contient) {
+            if ($contient->isAchete()) {
+                $buyedContient[] = $contient;
+            }
+        }
+        return $buyedContient;
+    }
+
 }

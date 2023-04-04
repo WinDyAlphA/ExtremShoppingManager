@@ -139,6 +139,39 @@
                 </div>
             </div>
         </div>
+        <br />
+        <section class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Article le plus cher</h3>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-center">{{mostExpensiveArticle.propose.article.nom}} ({{mostExpensiveArticle.propose.prix}}€)</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Article le moins cher</h3>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-center">{{cheapestArticle.propose.article.nom}} ({{cheapestArticle.propose.prix}}€)</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total dépensé</h3>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="text-center">{{totalSpend}}€</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div class="row">
             <a class="btnDeconnecter" href="{{path('app_logout')}}">Se déconnecter</a>
         </div>

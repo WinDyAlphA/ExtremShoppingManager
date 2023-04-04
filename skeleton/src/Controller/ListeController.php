@@ -148,6 +148,34 @@ class ListeController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
     }
+
+    #[Route('/liste/liste_add_unbuyed_articles/{id}', name: 'liste_add_unbuyed_articles')]
+    public function addUnbuyedArticles(
+        Liste $liste, 
+        ContientRepository $contientRepo,
+        Request $request, 
+        EntityManagerInterface $entityManager
+    ): Response
+    {   
+        $user = $this->getUser();
+        // If the user is not logged in, redirect to login
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        // If the user is not the owner of the list, redirect to home.
+        if ($liste->getUtilisateur() != $user && $user->getRoles()[0] != "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $contients = $user->getUnbuyedContient();
+        foreach ($contients as $contient) {
+            $contient->setListe($liste);
+            $entityManager->persist($contient);
+        }
+
+        $entityManager->flush();
+        return $this->redirectToRoute('liste_show', ['id' => $liste->getId()]);
+    }
     
 
     #[Route('/liste/liste_new', name: 'liste_new')]

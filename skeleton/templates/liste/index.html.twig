@@ -96,6 +96,7 @@
             {% endfor %}
 
         <a href="{{ path('liste_add_article',{'id': liste.id}) }}" class="btn btn-primary addArticle">Ajouter un article</a>
+        <a href="{{ path('liste_add_unbuyed_articles',{'id': liste.id}) }}" class="btn btn-info addArticle">Ajouter les articles non achetés des autres listes</a>
         <br />
         <br />
         <p id="total-cost">Total : {{ total }}€</p>

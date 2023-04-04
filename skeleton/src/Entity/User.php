@@ -153,4 +153,69 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getUnbuyedContient(): array
+    {
+        // Get all the listes
+        $listes = $this->getListe();
+        $contients = [];
+        foreach ($listes as $liste) {
+            $contients = array_merge($contients, $liste->getUnbuyedContient());
+        }
+        return $contients;
+    }
+
+    public function getBuyedContient(): array
+    {
+        // Get all the listes
+        $listes = $this->getListe();
+        $contients = [];
+        foreach ($listes as $liste) {
+            $contients = array_merge($contients, $liste->getBuyedContient());
+        }
+        return $contients;
+    }
+
+    public function getTotalSpend(): float
+    {
+        $total = 0;
+        foreach ($this->getBuyedContient() as $contient) {
+            $total += $contient->getPropose()->getPrix();
+        }
+        return $total;
+    }
+
+    public function getContient(): array
+    {
+        $contients = [];
+        foreach ($this->getListe() as $liste) {
+            $persistantCollection = $liste->getContient();
+            $contients = array_merge($contients, $persistantCollection->toArray());
+        }
+        return $contients;
+    }
+
+    public function getMostExpensiveArticle(): ?Contient
+    {
+        $contients = $this->getContient();
+        $mostExpensive = null;
+        foreach ($contients as $contient) {
+            if ($mostExpensive === null || $contient->getPropose()->getPrix() > $mostExpensive->getPropose()->getPrix()) {
+                $mostExpensive = $contient;
+            }
+        }
+        return $mostExpensive;
+    }
+
+    public function getCheapestArticle(): ?Contient
+    {
+        $contients = $this->getContient();
+        $cheapest = null;
+        foreach ($contients as $contient) {
+            if ($cheapest === null || $contient->getPropose()->getPrix() < $cheapest->getPropose()->getPrix()) {
+                $cheapest = $contient;
+            }
+        }
+        return $cheapest;
+    }
 }
