@@ -1,0 +1,12 @@
+{% extends 'baseNoNav.html.twig' %}
+
+{% block title %}New Magasin{% endblock %}
+
+{% block content %}
+    <h1>Create new Magasin</h1>
+    <a href="{{ path('app_magasin_index') }}" class="btn btn-primary">back to list</a>
+
+    {{ include('admin/magasin/_form.html.twig') }}
+
+    
+{% endblock %}

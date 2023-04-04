@@ -1,0 +1,13 @@
+{% extends 'baseNoNav.html.twig' %}
+
+{% block title %}Edit Propose{% endblock %}
+
+{% block content %}
+
+
+    {{ include('admin/propose/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary" href="{{ path('app_propose_index') }}">back to list</a>
+
+    {{ include('admin/propose/_delete_form.html.twig') }}
+{% endblock %}
