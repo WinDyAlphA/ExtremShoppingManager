@@ -18,9 +18,6 @@ class Magasin
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $localisation = null;
-
     #[ORM\OneToMany(mappedBy: 'magasin', targetEntity: Propose::class)]
     private Collection $proposess;
 
@@ -49,18 +46,6 @@ class Magasin
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getLocalisation(): ?string
-    {
-        return $this->localisation;
-    }
-
-    public function setLocalisation(string $localisation): self
-    {
-        $this->localisation = $localisation;
 
         return $this;
     }

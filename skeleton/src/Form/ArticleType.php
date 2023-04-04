@@ -9,13 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-
 class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom')
+            ->add('image')
             ->add('type', ChoiceType::class, array(
                 'choices' => $this->getTypes($options['types']),
                 'choice_label' => function ($type) {
@@ -39,6 +39,7 @@ class ArticleType extends AbstractType
         }
         return $types;
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

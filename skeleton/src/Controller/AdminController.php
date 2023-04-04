@@ -46,8 +46,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin');
         } else if ($fromPropose->isSubmitted() && $fromPropose->isValid()) {
             $propose = $fromPropose->getData();
-            $entityManager->persist($propose);
-            $entityManager->flush();
+            $em->persist($propose);
+            $em->flush();
             return $this->redirectToRoute('app_admin');
         }
 
