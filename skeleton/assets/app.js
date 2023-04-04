@@ -11,6 +11,7 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 import './scripts/quantity.js';
+import './scripts/add_article.js';
 import Chart from 'chart.js/auto';
 
 
