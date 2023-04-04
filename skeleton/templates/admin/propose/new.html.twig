@@ -1,0 +1,11 @@
+{% extends 'baseNoNav.html.twig' %}
+
+{% block title %}New Propose{% endblock %}
+
+{% block content %}
+
+
+    {{ include('admin/propose/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('app_propose_index') }}">back to list</a>
+{% endblock %}

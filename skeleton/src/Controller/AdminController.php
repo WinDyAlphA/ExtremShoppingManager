@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProposeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,10 @@ class AdminController extends AbstractController
         MagasinRepository $magasinRepo, 
         TypeRepository $typeRepo,
         EntityManagerInterface $em, 
+        ProposeRepository $proposeRepo,
         Request $request,
+        
+
         ): Response
     {
         $formMagasin = $this->createForm(MagasinType::class);
@@ -53,9 +57,9 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
-            'formMagasin' => $formMagasin->createView(),
-            'formArticle' => $formArticle->createView(),
-            'formPropose' => $fromPropose->createView(),
+            'magasins' => $magasinRepo->findAll(),
+            'articles' => $articleRepo->findAll(),
+            'proposes' => $proposeRepo->findAll(),
         ]);
     }
 }

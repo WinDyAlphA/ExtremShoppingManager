@@ -1,0 +1,36 @@
+{% extends 'baseNoNav.html.twig' %}
+
+{% block title %}Magasin{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ magasin.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ magasin.nom }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ magasin.localisation }}</td>
+            </tr>
+            <tr>
+                <th>GPSlong</th>
+                <td>{{ magasin.GPSlong }}</td>
+            </tr>
+            <tr>
+                <th>GPSlat</th>
+                <td>{{ magasin.GPSlat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_magasin_index') }}">back to list</a>
+
+    <a  class="btn btn-primary" href="{{ path('app_magasin_edit', {'id': magasin.id}) }}">edit</a>
+
+    {{ include('admin/magasin/_delete_form.html.twig') }}
+{% endblock %}
