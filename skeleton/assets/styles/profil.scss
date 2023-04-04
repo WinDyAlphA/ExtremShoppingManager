@@ -1,14 +1,12 @@
-.btnDeconnecter{
+div a.btnDeconnecter{
     background-color: #f44336;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: fit-content;
+    color: white;
     font-size: 16px;
     font-weight: bold;
     border-radius: 4px;
-    margin-left: 80%;
-
 }

@@ -24,10 +24,6 @@ class AdminController extends AbstractController
         Request $request,
         ): Response
     {
-        //Check if user is admin
-        // if (!$this->isGranted('ROLE_ADMIN')) {
-        //     return $this->redirectToRoute('app_home');
-        // }
         $formMagasin = $this->createForm(MagasinType::class);
         $formArticle = $this->createForm(ArticleType::class, null, array(
             'types' => $typeRepo->findAll(),

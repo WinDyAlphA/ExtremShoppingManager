@@ -69,6 +69,18 @@ form {
     cursor: pointer;
 }
 
+#navbarNav li {
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.6s ease;
+}
+
+#navbarNav li.admin {
+    background-color: #f8d0ff;
+    border-radius: 5px;
+}
+
 .checkboxItem {
     width: 20px;
     height: 20px;
