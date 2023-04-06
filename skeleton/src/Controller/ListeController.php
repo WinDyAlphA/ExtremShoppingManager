@@ -109,9 +109,10 @@ class ListeController extends AbstractController
             }
         }
         
+        
         return $this->render('liste/index.html.twig', [
             'controller_name' => 'ListeController',
-            'liste' => $liste,
+            'liste' => $liste->sortContientByMagasin(),
             'magasins' => $magasinRepo->findAll(),
             'articles' => $articleRepo->findAll(),
             'form' => $form->createView(),

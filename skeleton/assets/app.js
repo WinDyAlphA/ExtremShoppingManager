@@ -12,7 +12,7 @@ import './styles/app.scss';
 import './bootstrap';
 import './scripts/quantity.js';
 import './scripts/add_article.js';
-import Chart from 'chart.js/auto';
+//import Chart from 'chart.js/auto';
 
 
 require('bootstrap');

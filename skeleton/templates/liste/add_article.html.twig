@@ -24,7 +24,7 @@
         <select id="article_select" class="form-control">
             <option value="">Choisissez un article</option>
             {% for article in articles %}
-                <option value="{{ loop.index0 }}">{{ article.nom }}</option>
+                <option value="{{ article.id }}">{{ article.nom }}</option>
             {% endfor %}
         </select>
         <label>Rechercher un article</label>
@@ -35,7 +35,7 @@
         <!-- Transform the previous select into a fluid container where each article is dsiplayed as a litlle card with its image and its name -->
         <div class="article_container">
             {% for article in articles %}
-                <div class="article_card" id="article_{{ article.id - 1 }}">
+                <div class="article_card" id="article_{{ article.id }}">
                     <img src="{{ asset('build/images/' ~ article.image) }}" alt="image de l'article {{ article.nom }}">
                     <p>{{ article.nom }}</p>
                 </div>
@@ -50,7 +50,7 @@
         </select>
 
         {{ form_start(form) }}
-        {{ form_widget(form.propose, {'attr': {'style': 'display: none'}}) }}
+        {{ form_widget(form.propose) }}
         <label>Quantité</label>
         {{ form_widget(form.quantite) }}
         <p>Prix : <span id="priceValue"></span></p>

@@ -25,6 +25,7 @@ class ChooseProposeType extends AbstractType
                 'choice_label' => function ($propose) {
                     return $propose->getPrix();
                 },
+                'choice_value' => 'id',
                 'attr' => array('id' => 'proposeChoice'),
                 'label' => false,
                 'row_attr' => [

@@ -21,6 +21,7 @@ for (var i = 0; i < articleCards.length; i++) {
         var articleId = this.id.split('_')[1];
         // Update the article select
         articleSelect.value = articleId;
+        console.log('articleSelect.value: ' + articleSelect.value);
         // Trigger the change event
         var event = new Event('change');
         articleSelect.dispatchEvent(event);
@@ -29,6 +30,7 @@ for (var i = 0; i < articleCards.length; i++) {
             articleCards[i].classList.remove('selected');
         }
         this.classList.add('selected');
+        console.log('selected' + articleId);
     });
 }
 
@@ -40,7 +42,7 @@ var priceValue = document.getElementById('priceValue');
 
 
 articleInput.addEventListener('change', function() {
-    fillMagasins.call(this);
+    fillMagasins(this.value);
     updatePrice();
 });
 
@@ -48,9 +50,10 @@ magasinInput.addEventListener('change', function() {
     updatePrice();
 });
 
-function fillMagasins() {
+function fillMagasins(value) {
     // Get the article id
-    var articleId = this.value;
+    var articleId = value;
+    console.log('fillMagasins ' + articleId);
     // Get the list of magasin
     var magasinList = getMagasinList(articleId);
     // Fill the magasin input
@@ -63,7 +66,8 @@ function getMagasinList(articleId) {
     // For each propose
     for (var i = 0; i < proposeList.length; i++) {
         // If the article id is the same
-        intArticleId = parseInt(articleId) + 1;
+        console.log('proposeList[i].article.id: ' + articleId);
+        intArticleId = parseInt(articleId);
         console.log('list: ' + proposeList[i].article.id)
         console.log('article: ' + intArticleId)
         if (proposeList[i].article.id == intArticleId) {
@@ -116,13 +120,13 @@ function updatePrice() {
 }
 
 function getPropose(articleId, magasinId) {
-    let intArticleId = parseInt(articleId) + 1;
+    let intArticleId = parseInt(articleId);
     // For each propose
     for (var i = 0; i < proposeList.length; i++) {
         // If the article id and the magasin id are the same
         if (proposeList[i].article.id == intArticleId && proposeList[i].magasin.id == magasinId) {
             // Return the price
-            return proposeList[i]
+            return proposeList[i];
         }
     }
 }
@@ -131,7 +135,7 @@ function updateProposeInput(propose) {
     // Get the propose input
     var proposeInput = document.getElementById('choose_propose_propose');
     // Set the selected value of the propose input
-    let intProposeId = parseInt(propose.id) - 1;
+    let intProposeId = parseInt(propose.id);
     proposeInput.value = intProposeId;
     console.log(propose.id);
 }

@@ -134,4 +134,16 @@ class Liste
         return $buyedContient;
     }
 
+    public function sortContientByMagasin() : self
+    {
+        // Change $contient and return the liste
+        $contient = $this->getContient();
+        $contient = $contient->toArray();
+        usort($contient, function ($a, $b) {
+            return $a->getPropose()->getMagasin()->getNom() <=> $b->getPropose()->getMagasin()->getNom();
+        });
+        $this->contient = new ArrayCollection($contient);
+        return $this;
+    }
+
 }
