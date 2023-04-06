@@ -14,7 +14,17 @@ class Article1Type extends AbstractType
         $builder
             ->add('nom')
             ->add('image')
-            ->add('type')
+            ->add('type', ChoiceType::class, array(
+                'choices' => $this->getTypes($options['types']),
+                'choice_label' => function ($type) {
+                    return $type->getNom();
+                },
+                'choice_value' => 'id',
+                'multiple' => false,
+                'expanded' => false,
+                'placeholder' => 'Sélectionnez un type',
+                'attr' => array('class' => 'select2'),
+            ))
         ;
     }
 
@@ -22,6 +32,7 @@ class Article1Type extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Article::class,
+            'types' => array(),
         ]);
     }
 }

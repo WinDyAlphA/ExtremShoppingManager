@@ -24,8 +24,6 @@ class AdminController extends AbstractController
         EntityManagerInterface $em, 
         ProposeRepository $proposeRepo,
         Request $request,
-        
-
         ): Response
     {
         $formMagasin = $this->createForm(MagasinType::class);

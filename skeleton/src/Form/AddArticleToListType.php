@@ -15,19 +15,19 @@ class AddArticleToListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-    ->add('propose', ChoiceType::class, array(
-        'choices' => $this->getProposeWithMagasins($options['magasins']),
-        'choice_label' => function ($propose) {
-            return $propose->getMagasin()->getNom() . ' - ' . $propose->getArticle()->getNom();
-        },
-        'choice_value' => 'id',
-        'multiple' => false,
-        'expanded' => false,
-        'placeholder' => 'Sélectionnez un article',
-        'attr' => array('class' => 'select2'),
-    ))
-    ->add('quantite')
-    ->add('Ajouter', SubmitType::class);
+        ->add('propose', ChoiceType::class, array(
+            'choices' => $this->getProposeWithMagasins($options['magasins']),
+            'choice_label' => function ($propose) {
+                return $propose->getMagasin()->getNom() . ' - ' . $propose->getArticle()->getNom();
+            },
+            'choice_value' => 'id',
+            'multiple' => false,
+            'expanded' => false,
+            'placeholder' => 'Sélectionnez un article',
+            'attr' => array('class' => 'select2'),
+        ))
+        ->add('quantite')
+        ->add('Ajouter', SubmitType::class);
 
     }
 

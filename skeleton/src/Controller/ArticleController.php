@@ -38,7 +38,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('articleNew.html.twig', [
+        return $this->renderForm('admin/articleNew.html.twig', [
             'article' => $article,
             'form' => $form,
             'magasins' => $magasinRepository->findAll(),
@@ -57,9 +57,11 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/admin/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    public function edit(Request $request, Article $article, ArticleRepository $articleRepository, TypeRepository $typeRepository): Response
     {
-        $form = $this->createForm(Article2Type::class, $article);
+        $form = $this->createForm(Article2Type::class, $article, [
+            'types' => $typeRepository->findAll(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,7 +70,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/edit.html.twig', [
+        return $this->renderForm('admin/article/edit.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);

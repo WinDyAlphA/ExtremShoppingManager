@@ -13,7 +13,6 @@ class Magasin1Type extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('localisation')
             ->add('GPSlong')
             ->add('GPSlat')
         ;

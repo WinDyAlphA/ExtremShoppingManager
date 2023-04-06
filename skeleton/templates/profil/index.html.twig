@@ -147,7 +147,11 @@
                         <h3>Article le plus cher</h3>
                     </div>
                     <div class="card-body">
+                        {% if mostExpensiveArticle is not null %}
                         <h3 class="text-center">{{mostExpensiveArticle.propose.article.nom}} ({{mostExpensiveArticle.propose.prix}}€)</h3>
+                        {% else %}
+                        <h3 class="text-center">Aucun article n'a été acheté</h3>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -157,7 +161,11 @@
                         <h3>Article le moins cher</h3>
                     </div>
                     <div class="card-body">
+                        {% if cheapestArticle is not null %}
                         <h3 class="text-center">{{cheapestArticle.propose.article.nom}} ({{cheapestArticle.propose.prix}}€)</h3>
+                        {% else %}
+                        <h3 class="text-center">Aucun article n'a été acheté</h3>
+                        {% endif %}
                     </div>
                 </div>
             </div>

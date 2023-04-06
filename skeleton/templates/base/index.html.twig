@@ -17,7 +17,7 @@
         }
 
         .header {
-            background-color: #A9DEF9;
+            background: linear-gradient(to right, #6cade6, 50%, #c452e3);
             color: black;
             padding: 20px;
         }
@@ -47,7 +47,7 @@
 
         .btn {
             text-decoration: none;
-            background-color: #A9DEF9;
+            background: linear-gradient(to right, #6cade6, 50%, #c452e3);
             color: black;
             padding: 0.8em 1.5em;
             border: none;
@@ -68,6 +68,9 @@
             padding: 1em;
             text-align: center;
         }
+        li {
+            font-size: 1.4em;
+        }
     </style>
 </head>
 <body>
@@ -81,8 +84,18 @@
                 <h2 class="text-center mb-4">Le concept</h2>
                 <div class="row justify-content-center">
                     <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-9">
                         <p>XtremShoppingManagerDeluxe est un site web qui vous permet de créer des listes de courses en y ajoutant les prix des articles que vous avez l'habitude d'acheter. Vous pouvez ensuite visualiser les statistiques tarifaires de ces listes et ainsi optimiser vos achats pour économiser de l'argent.</p>
-                        <p>Vous pouvez également partager vos listes avec vos amis et votre famille pour collaborer sur vos achats.</p>
+                        
+                        </div>
+                        <div class="col-sm-3">
+                        <br />
+                        <br />
+                        <img src=" {{ asset('build/images/logo_xsmd.png') }}" alt="panier" class="img-fluid" width="200" height="300">
+                        </div>
+                    </div>
+                    <p>Vous pouvez également partager vos listes avec vos amis et votre famille pour collaborer sur vos achats.</p>
                         <a class="btn btn-primary mt-3" href="{{ path('app_login') }}">Commencer</a>
                     </div>
                 </div>
@@ -110,11 +123,6 @@
         </div>
         
     </div>
-    <div class="footer py-3" style="position: fixed; bottom: 0; width: 100%;">
-            <div class="container">
-                <p class="text-center">XtremShoppingManagerDeluxe &copy; 2023 - Tous droits réservés</p>
-            </div>
-        </div>
 </body>
 
 {% endblock %}
